@@ -1,6 +1,6 @@
 /* ==================================================================
 	AngularJS Datatype Editor - Time
-	Two directives to edit a time. One directive is responsible for creating a popup 
+	Two directives to edit a time. One directive is responsible for creating a popup
 	picker on an input. The second direcrtive is responsible for creating that input
 	when clicking on a time.
 
@@ -115,18 +115,19 @@ angular.module('ADE').directive('adeTimepop', ['$filter',function($filter){
 				} else if(e.keyCode==9) { //tab key detection
 					element.timepicker('updateWidget');
 					element.timepicker('hideWidget', true);
-				} 
+				}
 			});
 
 			element.on('keyup.ADE', updateFromKey); //needs to be on keyup because some keys (delete) are not send on press
 
 			//initialization of the datapicker
 			element.timepicker({showMeridian:format=="24" ? false : true });
-	
+
 			scope.$on('$destroy', function() { //need to clean up the event watchers when the scope is destroyed
 				if(element) {
 					element.off('keydown.ADE');
 					element.off('keyup.ADE');
+					element.timepicker('removeWidget');
 				}
 			});
 
@@ -271,6 +272,7 @@ angular.module('ADE').directive('adeTime', ['ADE', '$compile', '$filter', functi
 			scope.$on('$destroy', function() { //need to clean up the event watchers when the scope is destroyed
 				if(element) {
 					element.off('click.ADE');
+					element.timepicker('removeWidget');
 				}
 			});
 
